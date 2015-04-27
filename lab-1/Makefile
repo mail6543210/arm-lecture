@@ -32,3 +32,7 @@ qemu: fibseq
 	@sleep 1
 	@yes 7 | $(call QEMU_CMD)
 	@sleep 1
+
+gdb: fibseq
+	echo 5 | qemu-arm -L /usr/arm-linux-gnueabihf -g 1234 ./fibseq &
+	cgdb -d arm-none-eabi-gdb
