@@ -10,6 +10,13 @@
 lock_mutex:
         @ INSERT CODE BELOW
 
+    mov r2, #locked
+    @r0=addr, r1=value, r2=status
+    LDREX r1, [r0]
+    CMP r1, #0
+	    STREXEQ r1, r2, [r0]
+	    CMPEQ r1, #0
+    BNE lock_mutex
         @ END CODE INSERT
 	bx lr
 
@@ -20,6 +27,9 @@ lock_mutex:
 unlock_mutex:
 	@ INSERT CODE BELOW
         
+	mov r2, #unlocked
+    LDREX r1, [r0]
+    STREX r1, r2, [r0]
         @ END CODE INSERT
 	bx lr
 	.size unlock_mutex, .-unlock_mutex
