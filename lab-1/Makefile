@@ -6,12 +6,13 @@ objects	= fibseq.o fib.o
 
 default: fibseq
 
-.PHONY: default clean qemu
+.FORCE:
+.PHONY: default clean qemu .FORCE
 
 fibseq: $(objects)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-fib.o: fib.s
+fib.o: fib.s .FORCE
 fibseq.o: fibseq.c
 
 %.o: %.c
