@@ -5,13 +5,14 @@ objects = atomic.o mutex.o
 
 default: atomic
 
-.PHONY: default clean
+.PHONY: default clean .FORCE
+.FORCE:
 
 atomic: $(objects)
 	$(CC) $(CFLAGS) -o$@ $^
 
 atomic.o: atomic.c
-mutex.o: mutex.s
+mutex.o: mutex.s .FORCE
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) -o $@ $<
