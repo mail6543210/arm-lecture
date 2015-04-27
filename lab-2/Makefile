@@ -24,3 +24,7 @@ clean:
 
 qemu: atomic
 	qemu-arm ./atomic
+
+gdb: atomic
+	qemu-arm -g 1234 ./atomic &
+	cgdb -d arm-none-eabi-gdb
