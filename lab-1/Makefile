@@ -1,5 +1,5 @@
 CC	= arm-linux-gnueabihf-gcc
-CFLAGS	= -O1
+CFLAGS	= -O1 -ggdb3
 LDFLAGS = -fno-stack-protector
 
 objects	= fibseq.o fib.o
