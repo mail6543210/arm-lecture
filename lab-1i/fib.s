@@ -11,33 +11,31 @@
 fibonacci:
 	@ ADD/MODIFY CODE BELOW
 	@ PROLOG
-	push {r3, r4, r5, lr}
+	push {lr}
 
-	@ R4 = R0 - 0 (update flags)
-	@ if(R0 <= 0) goto .L3 (which returns 0)
+ 	@ if(R0 <= 0) goto .L3 (which returns 0)
+	SUBS r0, #0
+	BLS .L3
 
-	@ Compare R4 wtih 1
-	@ If R4 == 1 goto .L4 (which returns 1)
+	@ a, b = 0, 1
+	MOV r1, #0
+	MOV r2, #1
 
-	@ R0 = R4 - 1
-	@ Recursive call to fibonacci with R4 - 1 as parameter
+.WHILE:
+	@ a, b = b, a+b
+	MOV r3, r1
+	MOV r1, r2
+	ADD r2, r3, r1
+	@ n--
+	SUBS r0, r0, #1
+	BNE .WHILE
 
-	@ R5 = R0
-	@ R0 = R4 - 2
-	@ Recursive call to fibonacci with R4 - 2 as parameter
-
-	@ R0 = R5 + R0 (update flags)
-
-	pop {r3, r4, r5, pc}		@EPILOG
-
+	MOV r0, r1
+	pop {pc}		@EPILOG
 	@ END CODE MODIFICATION
 .L3:
 	mov r0, #0			@ R0 = 0
-	pop {r3, r4, r5, pc}		@ EPILOG
-
-.L4:
-	mov r0, #1			@ R0 = 1
-	pop {r3, r4, r5, pc}		@ EPILOG
+	pop {pc}		@ EPILOG
 
 	.size fibonacci, .-fibonacci
 	.end
